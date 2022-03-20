@@ -2,20 +2,16 @@ import Link from 'next/link';
 
 import List from 'components/list-main';
 import Layout from 'components/main';
-import { User } from 'interfaces';
+import { sampleUserData } from 'utils/sample-data';
 
-type Props = {
-  items: User[];
-};
-
-const WithStaticProps = ({ items }: Props) => (
+const Users = () => (
   <Layout title="Users List | Next.js + TypeScript Example">
     <h1>Users List</h1>
     <p>
       Example fetching data from inside <code>getStaticProps()</code>.
     </p>
     <p>You are currently on: /users</p>
-    <List items={items} />
+    <List items={sampleUserData} />
     <p>
       <Link href="/">
         <a>Go home</a>
@@ -24,4 +20,4 @@ const WithStaticProps = ({ items }: Props) => (
   </Layout>
 );
 
-export default WithStaticProps;
+export default Users;
