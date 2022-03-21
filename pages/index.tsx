@@ -6,10 +6,6 @@ const IndexPage = () => {
   const ref = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
-    if (typeof window === 'undefined') {
-      return;
-    }
-
     window.addEventListener('message', event => {
       if (event.data.event === 'loggedIn') {
         setUserId(event.data.userId);
@@ -35,7 +31,10 @@ const IndexPage = () => {
   const doLogin = () => {
     ref?.current?.contentWindow?.postMessage({ event: 'login' }, '*');
   };
-  console.log();
+
+  if (typeof window === 'undefined') {
+    return <></>;
+  }
 
   return (
     <div>
