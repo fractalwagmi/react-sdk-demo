@@ -94,6 +94,6 @@
         }
       ]
     }],
-    "@typescript-eslint/prefer-includes": "warn",
+    "@typescript-eslint/prefer-includes": "warn"
   }
 }

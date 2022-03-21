@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-
 import Head from 'next/head';
+import { useEffect, useRef, useState } from 'react';
 
 const IndexPage = () => {
   const [userId, setUserId] = useState<string | undefined>();
