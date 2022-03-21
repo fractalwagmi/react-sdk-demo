@@ -6,6 +6,10 @@ const IndexPage = () => {
   const ref = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
     window.addEventListener('message', event => {
       if (event.data.event === 'loggedIn') {
         setUserId(event.data.userId);
