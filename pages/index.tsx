@@ -3,15 +3,18 @@ import { useEffect, useRef, useState } from 'react';
 
 const IndexPage = () => {
   const [userId, setUserId] = useState<string | undefined>();
+  const [publicKey, setPublicKey] = useState<string | undefined>();
   const ref = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
     window.addEventListener('message', event => {
       if (event.data.event === 'loggedIn') {
         setUserId(event.data.userId);
+        setPublicKey(event.data.publicKey);
       }
       if (event.data.event === 'loggedOut') {
         setUserId(undefined);
+        setPublicKey(undefined);
       }
     });
   }, []);
@@ -65,6 +68,8 @@ const IndexPage = () => {
       <div style={{ marginTop: '1rem' }}>
         {userId && <button onClick={registerKill}>Kill someone</button>}
       </div>
+      <div style={{ marginTop: '1rem' }}>publicKey</div>
+      <div>{publicKey}</div>
     </div>
   );
 };
