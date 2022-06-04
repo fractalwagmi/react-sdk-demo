@@ -51,7 +51,7 @@
       }
     ],
     // Typescript rules
-    "@typescript-eslint/naming-convention": ["error", 
+    "@typescript-eslint/naming-convention": ["warn", 
       {
         "selector": "objectLiteralProperty",
         "format": ["camelCase", "PascalCase"],
@@ -63,7 +63,7 @@
       { "ignoreArrowShorthand": true }
     ],
     "@typescript-eslint/no-dynamic-delete": "error",
-    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-explicit-any": "warn",
     "@typescript-eslint/no-implicit-any-catch": "error",
     "@typescript-eslint/no-require-imports": "error",
     "@typescript-eslint/prefer-nullish-coalescing": "error",
