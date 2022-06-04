@@ -118,7 +118,6 @@ export function Wallet() {
       </a>
       {userToken && <div>User token: {userToken}</div>}
       {userId && <div>User id: {userId}</div>}
-      {/* @ts-ignore */}
       {items.map((i: any) => (
         <div key={i.id}>
           <img alt="" width="300" src={i.files[0].uri} />
