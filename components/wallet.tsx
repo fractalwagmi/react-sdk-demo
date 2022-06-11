@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 export function Wallet() {
   const [url, setUrl] = useState('');
   const [code, setCode] = useState('');
-  const [token, setToken] = useState('');
   const [userToken, setUserToken] = useState('');
   const [userId, setUserId] = useState('');
   const [items, setItems] = useState([]);
@@ -15,59 +14,47 @@ export function Wallet() {
   useEffect(() => {
     const getUrl = async () => {
       const result = await fetch(
-        'https://auth-api.fractal.is/auth/oauth/token',
-        {
-          body: JSON.stringify({
-            client_id: 'e0zyZpK7ojL5ozFD1Kww1APjsMePdj99FX3StE',
-            client_secret:
-              'mdGt8On3Sh08CjNf8IY5mQkiKbFiCQmsJyWghR1Ke16btEajrMDUqP2F5AYCWSlVKlJVhcsUZnbg4S4W3oSg',
-          }),
-          method: 'POST',
-        },
+        'https://auth-api.fractal.is/auth/v2/approval/geturl?clientId=e0zyZpK7ojL5ozFD1Kww1APjsMePdj99FX3StE&scope=items:read',
       );
-      const token = await result.json();
-      setToken(token.access_token);
-
-      const res = await fetch(
-        'https://auth-api.fractal.is/auth/approval/geturl',
-        {
-          headers: { authorization: `Bearer ${token.access_token}` },
-          method: 'POST',
-        },
-      );
-      const response = await res.json();
-
-      setUrl(response.url);
-      setCode(response.code);
+      const approvals = await result.json();
+      setUrl(approvals.url);
+      setCode(approvals.code);
     };
     getUrl();
   }, []);
 
   useEffect(() => {
     const pollCode = async () => {
-      if (code && token) {
+      if (code) {
         const interval = setInterval(async () => {
           const res = await fetch(
-            `https://auth-api.fractal.is/auth/approval/result?code=${code}`,
+            `https://auth-api.fractal.is/auth/v2/approval/result`,
             {
-              headers: { authorization: `Bearer ${token}` },
+              body: JSON.stringify({
+                clientId: 'e0zyZpK7ojL5ozFD1Kww1APjsMePdj99FX3StE',
+                code,
+              }),
               method: 'POST',
             },
           );
           if (!res.ok) {
-            clearInterval(interval);
+            if (res.status === 401) {
+              return;
+            } else {
+              clearInterval(interval);
+            }
           }
           const response = await res.json();
           if (response) {
-            setUserToken(response.bearer_token);
-            setUserId(response.user_id);
+            setUserToken(response.bearerToken);
+            setUserId(response.userId);
             clearInterval(interval);
           }
         }, 3000);
       }
     };
     pollCode();
-  }, [code, token]);
+  }, [code]);
 
   useEffect(() => {
     const getItems = async () => {
