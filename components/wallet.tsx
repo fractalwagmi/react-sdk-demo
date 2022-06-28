@@ -6,6 +6,12 @@ export function Wallet() {
   const [userToken, setUserToken] = useState('');
   const [userId, setUserId] = useState('');
   const [items, setItems] = useState([]);
+  const [info, setInfo] = useState<{
+    accountPublicKey: string;
+    email: string;
+    username: string;
+  }>();
+  const [coins, setCoins] = useState([]);
   // const [userId, setUserId] = useState<string | undefined>();
   // const [publicKey, setPublicKey] = useState<string | undefined>();
   // const [username, setUsername] = useState<string | undefined>();
@@ -14,7 +20,7 @@ export function Wallet() {
   useEffect(() => {
     const getUrl = async () => {
       const result = await fetch(
-        'https://auth-api.fractal.is/auth/v2/approval/geturl?clientId=e0zyZpK7ojL5ozFD1Kww1APjsMePdj99FX3StE&scope=items:read',
+        'https://auth-api.fractal.is/auth/v2/approval/geturl?clientId=e0zyZpK7ojL5ozFD1Kww1APjsMePdj99FX3StE&scope=items:read&scope=coins:read&scope=identify',
       );
       const approvals = await result.json();
       setUrl(approvals.url);
@@ -71,7 +77,37 @@ export function Wallet() {
         }
       }
     };
+    const getInfo = async () => {
+      if (userToken) {
+        const res = await fetch(`https://api.fractal.is/sdk/v1/wallet/info`, {
+          headers: { authorization: `Bearer ${userToken}` },
+        });
+        if (!res.ok) {
+          return;
+        }
+        const response = await res.json();
+        if (response) {
+          setInfo(response);
+        }
+      }
+    };
+    const getCoins = async () => {
+      if (userToken) {
+        const res = await fetch(`https://api.fractal.is/sdk/v1/wallet/coins`, {
+          headers: { authorization: `Bearer ${userToken}` },
+        });
+        if (!res.ok) {
+          return;
+        }
+        const response = await res.json();
+        if (response) {
+          setCoins(response.coins);
+        }
+      }
+    };
     getItems();
+    getInfo();
+    getCoins();
   }, [userToken]);
 
   return (
@@ -103,8 +139,25 @@ export function Wallet() {
       <a href={url} target="_blank" rel="noreferrer">
         Sign in with Fractal
       </a>
+      <br />
+      <br />
       {userToken && <div>User token: {userToken}</div>}
       {userId && <div>User id: {userId}</div>}
+      <br />
+      <div key={info?.accountPublicKey}>
+        <div>{info?.accountPublicKey}</div>
+        <div>{info?.email}</div>
+        <div>{info?.username}</div>
+      </div>
+      <br />
+      {coins.map((c: any) => (
+        <div key={c.symbol}>
+          <div>
+            {c.uiAmount} {c.symbol}
+          </div>
+        </div>
+      ))}
+      <br />
       {items.map((i: any) => (
         <div key={i.id}>
           <img alt="" width="300" src={i.files[0].uri} />
