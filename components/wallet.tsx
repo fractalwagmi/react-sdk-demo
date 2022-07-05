@@ -37,6 +37,7 @@ export function Wallet() {
               method: 'POST',
             },
           );
+          console.info('res: ', res);
           if (!res.ok) {
             if (res.status === 401) {
               return;
@@ -74,6 +75,13 @@ export function Wallet() {
     getItems();
   }, [userToken]);
 
+  console.info('url: ', url);
+  const newUrl = url.replace(
+    'https://fractal.is',
+    'https://fractal-git-dima-auth-container-refactor.fractalpreview.com',
+  );
+  console.info('newUrl: ', newUrl);
+
   return (
     <div>
       {/* <div style={{ marginTop: '1rem' }}>
@@ -100,7 +108,7 @@ export function Wallet() {
       <div>{username}</div>
       <div style={{ marginTop: '1rem' }}>balance</div>
       <div>{sol?.balance}</div> */}
-      <a href={url} target="_blank" rel="noreferrer">
+      <a href={newUrl} target="_blank" rel="noreferrer">
         Sign in with Fractal
       </a>
       {userToken && <div>User token: {userToken}</div>}
