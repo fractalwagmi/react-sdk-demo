@@ -139,32 +139,33 @@ export function Wallet() {
       <a href={url} target="_blank" rel="noreferrer">
         Sign in with Fractal
       </a>
-      <br />
-      <br />
-      {userToken && <div>User token: {userToken}</div>}
-      {userId && <div>User id: {userId}</div>}
-      <br />
-      <div key={info?.accountPublicKey}>
+      <div style={{ marginTop: '1rem' }}>
+        {userToken && <div>User token: {userToken}</div>}
+        {userId && <div>User id: {userId}</div>}
+      </div>
+      <div key={info?.accountPublicKey} style={{ marginTop: '1rem' }}>
         <div>{info?.accountPublicKey}</div>
         <div>{info?.email}</div>
         <div>{info?.username}</div>
       </div>
-      <br />
-      {coins.map((c: any) => (
-        <div key={c.symbol}>
-          <div>
-            {c.uiAmount} {c.symbol}
+      <div style={{ marginTop: '1rem' }}>
+        {coins.map((c: any) => (
+          <div key={c.symbol}>
+            <div>
+              {c.uiAmount} {c.symbol}
+            </div>
           </div>
-        </div>
-      ))}
-      <br />
-      {items.map((i: any) => (
-        <div key={i.id}>
-          <img alt="" width="300" src={i.files[0].uri} />
-          <div>{i.name}</div>
-          <div>{i.id}</div>
-        </div>
-      ))}
+        ))}
+      </div>
+      <div style={{ marginTop: '1rem' }}>
+        {items.map((i: any) => (
+          <div key={i.id}>
+            <img alt="" width="300" src={i.files[0].uri} />
+            <div>{i.name}</div>
+            <div>{i.id}</div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
