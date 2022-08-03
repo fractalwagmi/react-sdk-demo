@@ -151,9 +151,7 @@ export function Wallet() {
       <div style={{ marginTop: '1rem' }}>
         {coins.map((c: any) => (
           <div key={c.symbol}>
-            <div>
-              {c.uiAmount} {c.symbol}
-            </div>
+            {c.uiAmount} {c.symbol}
           </div>
         ))}
       </div>
