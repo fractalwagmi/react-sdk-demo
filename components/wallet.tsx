@@ -1,16 +1,19 @@
 // import { FractalWallet, useSolBalance } from '@fractalwagmi/fractal-sdk';
 import { useEffect, useState } from 'react';
+
+interface UserInfo {
+  accountPublicKey: string;
+  email: string;
+  username: string;
+}
+
 export function Wallet() {
   const [url, setUrl] = useState('');
   const [code, setCode] = useState('');
   const [userToken, setUserToken] = useState('');
   const [userId, setUserId] = useState('');
   const [items, setItems] = useState([]);
-  const [info, setInfo] = useState<{
-    accountPublicKey: string;
-    email: string;
-    username: string;
-  }>();
+  const [info, setInfo] = useState<UserInfo>();
   const [coins, setCoins] = useState([]);
   // const [userId, setUserId] = useState<string | undefined>();
   // const [publicKey, setPublicKey] = useState<string | undefined>();
