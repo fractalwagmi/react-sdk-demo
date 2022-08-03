@@ -143,7 +143,7 @@ export function Wallet() {
         {userToken && <div>User token: {userToken}</div>}
         {userId && <div>User id: {userId}</div>}
       </div>
-      <div key={info?.accountPublicKey} style={{ marginTop: '1rem' }}>
+      <div style={{ marginTop: '1rem' }}>
         <div>{info?.accountPublicKey}</div>
         <div>{info?.email}</div>
         <div>{info?.username}</div>
