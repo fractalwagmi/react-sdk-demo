@@ -1,4 +1,3 @@
-// import { FractalWallet, useSolBalance } from '@fractalwagmi/fractal-sdk';
 import { useEffect, useState } from 'react';
 
 interface UserInfo {
@@ -15,10 +14,6 @@ export function Wallet() {
   const [items, setItems] = useState([]);
   const [info, setInfo] = useState<UserInfo>();
   const [coins, setCoins] = useState([]);
-  // const [userId, setUserId] = useState<string | undefined>();
-  // const [publicKey, setPublicKey] = useState<string | undefined>();
-  // const [username, setUsername] = useState<string | undefined>();
-  // const sol = useSolBalance();
 
   useEffect(() => {
     const getUrl = async () => {
@@ -115,30 +110,6 @@ export function Wallet() {
 
   return (
     <div>
-      {/* <div style={{ marginTop: '1rem' }}>
-        <FractalWallet
-          onLogin={user => {
-            setUserId(user.userId);
-            setPublicKey(user.publicKey);
-            setUsername(user.username);
-            console.log(user);
-          }}
-          onLogout={() => {
-            console.log('logged out');
-          }}
-          ready={() => {
-            console.log('ready');
-          }}
-        />
-      </div>
-      <div style={{ marginTop: '1rem' }}>userId</div>
-      <div>{userId}</div>
-      <div style={{ marginTop: '1rem' }}>publicKey</div>
-      <div>{publicKey}</div>
-      <div style={{ marginTop: '1rem' }}>username</div>
-      <div>{username}</div>
-      <div style={{ marginTop: '1rem' }}>balance</div>
-      <div>{sol?.balance}</div> */}
       <a href={url} target="_blank" rel="noreferrer">
         Sign in with Fractal
       </a>
