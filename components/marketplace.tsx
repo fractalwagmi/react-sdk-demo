@@ -8,7 +8,7 @@ export function Marketplace() {
   useEffect(() => {
     const getItemsForSale = async () => {
       const result = await fetch(
-        'https://api.fractal.is/sdk/v1/project/items/for_sale?sort.direction=ASCENDING&sort.field=PRICE&limit=25',
+        'https://api.fractal.is/sdk/v1/marketplace/solana/items/for_sale?sort.direction=ASCENDING&sort.field=PRICE&limit=25',
         {
           headers: { authorization: `Bearer ${demoAuthToken}` },
         },
