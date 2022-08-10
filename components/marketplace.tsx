@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 export function Marketplace() {
   const [itemsForSale, setItemsForSale] = useState([]);
   const demoAuthToken =
-    'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTk2MzIxODYsImh0dHBzOi8vZnJhY3RhbC5pcyI6eyJwcm9qZWN0X2lkIjoiNTY1NTM3NDM0NjU4NDA2NCJ9LCJpYXQiOjE2NTk1NjAxODYsImlzcyI6Imh0dHBzOi8vYXV0aC1hcGkuZnJhY3RhbC5pcyJ9.3yY3zVBqt0EgnkoHkeVIlYm8ZDG5_eHSIkovWje2Ms7FxaTu2zYS-a1hXXOABeeQR8ktLJliKkoj3RbmRrkpDg';
+    'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjAyMjI0NTMsImh0dHBzOi8vZnJhY3RhbC5pcyI6eyJwcm9qZWN0X2lkIjoiNTY1NTM3NDM0NjU4NDA2NCJ9LCJpYXQiOjE2NjAxNTA0NTMsImlzcyI6Imh0dHBzOi8vYXV0aC1hcGkuZnJhY3RhbC5pcyJ9.vR0c4vmUfHD7jbq18H9RbDiozx8he8hu8xRbUrU_JwNL2A6qXjNHmGAeHVqvr7rFXmn5R8MaZLFiJbvQyjeoAA';
 
   useEffect(() => {
     const getItemsForSale = async () => {
