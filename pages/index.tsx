@@ -1,13 +1,15 @@
-import { WalletProvider } from '@fractalwagmi/fractal-sdk';
+import { FractalProvider } from '@fractalwagmi/fractal-sdk';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
-import { Wallet } from 'components/wallet';
+const FractalWallet = dynamic<Record<never, never>>(
+  async () => import('components/wallet').then(mod => mod.Wallet),
+  {
+    ssr: false,
+  },
+);
 
 const IndexPage = () => {
-  if (typeof window === 'undefined') {
-    return <></>;
-  }
-
   return (
     <div>
       <Head>
@@ -17,9 +19,9 @@ const IndexPage = () => {
       </Head>
       <h1>SDK Demo Game ❄️</h1>
       <div>
-        <WalletProvider>
-          <Wallet />
-        </WalletProvider>
+        <FractalProvider>
+          <FractalWallet />
+        </FractalProvider>
       </div>
     </div>
   );

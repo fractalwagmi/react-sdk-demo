@@ -1,4 +1,4 @@
-import { WalletProvider } from '@fractalwagmi/fractal-sdk';
+import { FractalProvider } from '@fractalwagmi/fractal-sdk';
 import Head from 'next/head';
 
 import { Marketplace } from 'components/marketplace';
@@ -17,9 +17,9 @@ const MarketplacePage = () => {
       </Head>
       <h1>SDK Demo Marketplace ❄️</h1>
       <div>
-        <WalletProvider>
+        <FractalProvider>
           <Marketplace />
-        </WalletProvider>
+        </FractalProvider>
       </div>
     </div>
   );

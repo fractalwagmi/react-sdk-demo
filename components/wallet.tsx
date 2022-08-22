@@ -1,136 +1,45 @@
-import { useEffect, useState } from 'react';
+import {
+  SignInWithFractal,
+  useUser,
+  useUserWallet,
+  useCoins,
+  useItems,
+  Scope,
+  Coin,
+  Item,
+} from '@fractalwagmi/fractal-sdk';
 
-interface UserInfo {
-  accountPublicKey: string;
-  email: string;
-  username: string;
-}
+const CLIENT_ID = 'e0zyZpK7ojL5ozFD1Kww1APjsMePdj99FX3StE';
 
 export function Wallet() {
-  const [url, setUrl] = useState('');
-  const [code, setCode] = useState('');
-  const [userToken, setUserToken] = useState('');
-  const [userId, setUserId] = useState('');
-  const [items, setItems] = useState([]);
-  const [info, setInfo] = useState<UserInfo>();
-  const [coins, setCoins] = useState([]);
-
-  useEffect(() => {
-    const getUrl = async () => {
-      const result = await fetch(
-        'https://auth-api.fractal.is/auth/v2/approval/geturl?clientId=e0zyZpK7ojL5ozFD1Kww1APjsMePdj99FX3StE&scope=items:read&scope=coins:read&scope=identify',
-      );
-      const approvals = await result.json();
-      setUrl(approvals.url);
-      setCode(approvals.code);
-    };
-    getUrl();
-  }, []);
-
-  useEffect(() => {
-    const pollCode = async () => {
-      if (code) {
-        const interval = setInterval(async () => {
-          const res = await fetch(
-            `https://auth-api.fractal.is/auth/v2/approval/result`,
-            {
-              body: JSON.stringify({
-                clientId: 'e0zyZpK7ojL5ozFD1Kww1APjsMePdj99FX3StE',
-                code,
-              }),
-              method: 'POST',
-            },
-          );
-          if (!res.ok) {
-            if (res.status === 401) {
-              return;
-            } else {
-              clearInterval(interval);
-            }
-          }
-          const response = await res.json();
-          if (response) {
-            setUserToken(response.bearerToken);
-            setUserId(response.userId);
-            clearInterval(interval);
-          }
-        }, 3000);
-      }
-    };
-    pollCode();
-  }, [code]);
-
-  useEffect(() => {
-    const getItems = async () => {
-      if (userToken) {
-        const res = await fetch(`https://api.fractal.is/sdk/v1/wallet/items`, {
-          headers: { authorization: `Bearer ${userToken}` },
-        });
-        if (!res.ok) {
-          return;
-        }
-        const response = await res.json();
-        if (response) {
-          setItems(response.items);
-        }
-      }
-    };
-    const getInfo = async () => {
-      if (userToken) {
-        const res = await fetch(`https://api.fractal.is/sdk/v1/wallet/info`, {
-          headers: { authorization: `Bearer ${userToken}` },
-        });
-        if (!res.ok) {
-          return;
-        }
-        const response = await res.json();
-        if (response) {
-          setInfo(response);
-        }
-      }
-    };
-    const getCoins = async () => {
-      if (userToken) {
-        const res = await fetch(`https://api.fractal.is/sdk/v1/wallet/coins`, {
-          headers: { authorization: `Bearer ${userToken}` },
-        });
-        if (!res.ok) {
-          return;
-        }
-        const response = await res.json();
-        if (response) {
-          setCoins(response.coins);
-        }
-      }
-    };
-    getItems();
-    getInfo();
-    getCoins();
-  }, [userToken]);
+  const { data: user } = useUser();
+  const { data: userWallet } = useUserWallet();
+  const { data: coins } = useCoins();
+  const { data: items } = useItems();
 
   return (
     <div>
-      <a href={url} target="_blank" rel="noreferrer">
-        Sign in with Fractal
-      </a>
+      <SignInWithFractal
+        clientId={CLIENT_ID}
+        scopes={[Scope.IDENTIFY, Scope.COINS_READ, Scope.ITEMS_READ]}
+      ></SignInWithFractal>
       <div style={{ marginTop: '1rem' }}>
-        {userToken && <div>User token: {userToken}</div>}
-        {userId && <div>User id: {userId}</div>}
+        {user && <div>User id: {user.userId}</div>}
       </div>
       <div style={{ marginTop: '1rem' }}>
-        <div>{info?.accountPublicKey}</div>
-        <div>{info?.email}</div>
-        <div>{info?.username}</div>
+        <div>Solana Public Key: {userWallet?.solanaPublicKeys[0]}</div>
+        <div>Email: {user?.email}</div>
+        <div>Username: {user?.username}</div>
       </div>
       <div style={{ marginTop: '1rem' }}>
-        {coins.map((c: any) => (
+        {coins.map((c: Coin) => (
           <div key={c.symbol}>
             {c.uiAmount} {c.symbol}
           </div>
         ))}
       </div>
       <div style={{ marginTop: '1rem' }}>
-        {items.map((i: any) => (
+        {items.map((i: Item) => (
           <div key={i.id}>
             <img alt="" width="300" src={i.files[0].uri} />
             <div>{i.name}</div>
