@@ -5,6 +5,8 @@ import {
   useCoins,
   useItems,
   Scope,
+  Coin,
+  Item,
 } from '@fractalwagmi/fractal-sdk';
 
 const CLIENT_ID = 'e0zyZpK7ojL5ozFD1Kww1APjsMePdj99FX3StE';
@@ -30,14 +32,14 @@ export function Wallet() {
         <div>Username: {user?.username}</div>
       </div>
       <div style={{ marginTop: '1rem' }}>
-        {coins.map((c: any) => (
+        {coins.map((c: Coin) => (
           <div key={c.symbol}>
             {c.uiAmount} {c.symbol}
           </div>
         ))}
       </div>
       <div style={{ marginTop: '1rem' }}>
-        {items.map((i: any) => (
+        {items.map((i: Item) => (
           <div key={i.id}>
             <img alt="" width="300" src={i.files[0].uri} />
             <div>{i.name}</div>
