@@ -42,8 +42,10 @@ export const SendSOL = () => {
       transaction.serializeMessage(),
     );
 
+    console.log(unsignedTransactionB58);
+
     try {
-      signTransaction(unsignedTransactionB58);
+      await signTransaction(unsignedTransactionB58);
       // eslint-disable-next-line no-console
       console.log('Transaction signed');
     } catch (err: unknown) {
