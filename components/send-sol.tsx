@@ -17,7 +17,7 @@ export const SendSOL = () => {
     const blockhash = (await connection.getLatestBlockhash('finalized'))
       .blockhash;
 
-    const fromPublickey = new PublicKey(userWallet?.solanaPublicKeys[0]);
+    const fromPublickey = new PublicKey(userWallet.solanaPublicKeys[0]);
     const toPublickey = new PublicKey(
       'BDrA9BYVeFap3wjvZEVMRkvgj2YXwRU7SK8Vr28bzdgf',
     );
