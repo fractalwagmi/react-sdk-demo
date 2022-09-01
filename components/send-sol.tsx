@@ -5,8 +5,7 @@ import {
   SystemProgram,
   Transaction,
 } from '@solana/web3.js';
-declare module 'base58-js';
-import { binary_to_base58 } from 'base58-js';
+import base58 from 'bs58';
 
 export const SendSOL = () => {
   const { data: userWallet } = useUserWallet();
@@ -34,11 +33,9 @@ export const SendSOL = () => {
     transaction.recentBlockhash = blockhash;
     transaction.feePayer = fromPublickey;
 
-    const unsignedTransactionB58 = binary_to_base58(
+    const unsignedTransactionB58 = base58.encode(
       transaction.serializeMessage(),
     );
-
-    console.log(unsignedTransactionB58);
 
     try {
       signTransaction(unsignedTransactionB58);
