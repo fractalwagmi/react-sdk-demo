@@ -1,12 +1,12 @@
 import {
-  SignInWithFractal,
-  useUser,
-  useUserWallet,
-  useCoins,
-  useItems,
-  Scope,
   Coin,
   Item,
+  Scope,
+  SignInWithFractal,
+  useCoins,
+  useItems,
+  useUser,
+  useUserWallet,
 } from '@fractalwagmi/fractal-sdk';
 import {
   Connection,
@@ -15,7 +15,8 @@ import {
   Transaction,
 } from '@solana/web3.js';
 import { binary_to_base58 } from 'base58-js';
-const CLIENT_ID = 'e0zyZpK7ojL5ozFD1Kww1APjsMePdj99FX3StE';
+
+import { SignGenericTransaction } from 'components/sign-generic-transaction';
 
 export function Wallet() {
   const { data: user } = useUser();
@@ -69,7 +70,6 @@ export function Wallet() {
   return (
     <div>
       <SignInWithFractal
-        clientId={CLIENT_ID}
         scopes={[Scope.IDENTIFY, Scope.COINS_READ, Scope.ITEMS_READ]}
       ></SignInWithFractal>
       <div style={{ marginTop: '1rem' }}>
@@ -81,6 +81,8 @@ export function Wallet() {
         <div>Email: {user?.email}</div>
         <div>Username: {user?.username}</div>
       </div>
+      <SignGenericTransaction />
+      <h1>Coins</h1>
       <div style={{ marginTop: '1rem' }}>
         {coins.map((c: Coin) => (
           <div key={c.symbol}>
@@ -88,6 +90,7 @@ export function Wallet() {
           </div>
         ))}
       </div>
+      <h1>Items</h1>
       <div style={{ marginTop: '1rem' }}>
         {items.map((i: Item) => (
           <div key={i.id}>
