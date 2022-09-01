@@ -8,7 +8,13 @@ import {
   Coin,
   Item,
 } from '@fractalwagmi/fractal-sdk';
-
+import {
+  Connection,
+  PublicKey,
+  SystemProgram,
+  Transaction,
+} from '@solana/web3.js';
+import { binary_to_base58 } from 'base58-js';
 const CLIENT_ID = 'e0zyZpK7ojL5ozFD1Kww1APjsMePdj99FX3StE';
 
 export function Wallet() {
@@ -16,6 +22,49 @@ export function Wallet() {
   const { data: userWallet } = useUserWallet();
   const { data: coins } = useCoins();
   const { data: items } = useItems();
+
+  const connection = new Connection('https://api.mainnet-beta.solana.com');
+
+  const generateTransaction = async () => {
+    const blockhash = (await connection.getLatestBlockhash('finalized'))
+      .blockhash;
+
+    const fromPublickey = new PublicKey(userWallet?.solanaPublicKeys[0]);
+    const toPublickey = new PublicKey(
+      'BDrA9BYVeFap3wjvZEVMRkvgj2YXwRU7SK8Vr28bzdgf',
+    );
+    const transaction = new Transaction();
+
+    transaction.add(
+      SystemProgram.transfer({
+        fromPubkey: fromPublickey,
+        lamports: 100000,
+        toPubkey: toPublickey,
+      }),
+    );
+    transaction.recentBlockhash = blockhash;
+    transaction.feePayer = fromPublickey;
+
+    const unsignedTx = binary_to_base58(transaction.serializeMessage());
+
+    // TODO: replace with SDK transaction sign function when ready
+    const options = {
+      body: JSON.stringify({
+        clientId: 'e0zyZpK7ojL5ozFD1Kww1APjsMePdj99FX3StE',
+        unsigned: unsignedTx,
+      }),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+    };
+
+    fetch('https://auth-api.fractal.is/auth/v2/transaction/authorize', options)
+      .then(async response => response.json())
+      .then(response => window.open(response.url))
+      .catch(err => console.error(err));
+  };
 
   return (
     <div>
@@ -26,6 +75,7 @@ export function Wallet() {
       <div style={{ marginTop: '1rem' }}>
         {user && <div>User id: {user.userId}</div>}
       </div>
+      <button onClick={generateTransaction}>Send SOL</button>
       <div style={{ marginTop: '1rem' }}>
         <div>Solana Public Key: {userWallet?.solanaPublicKeys[0]}</div>
         <div>Email: {user?.email}</div>
