@@ -33,6 +33,7 @@ export const SignGenericTransaction = () => {
         flexDirection: 'column',
         gap: '0.5rem',
         padding: '1rem',
+        width: 'max-content',
       }}
     >
       <span>Sign Generic Transaction</span>
@@ -41,8 +42,8 @@ export const SignGenericTransaction = () => {
           placeholder="Input unsigned transaction b58"
           onChange={e => setUnsignedTransactionB58(e.target.value)}
           style={{
-            minWidth: '500px',
             padding: '0.5rem 1rem',
+            width: '500px',
           }}
           rows={5}
         ></textarea>
