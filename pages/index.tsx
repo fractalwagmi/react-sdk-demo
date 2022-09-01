@@ -2,6 +2,8 @@ import { FractalProvider } from '@fractalwagmi/fractal-sdk';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
+const CLIENT_ID = 'e0zyZpK7ojL5ozFD1Kww1APjsMePdj99FX3StE';
+
 const FractalWallet = dynamic<Record<never, never>>(
   async () => import('components/wallet').then(mod => mod.Wallet),
   {
@@ -19,7 +21,7 @@ const IndexPage = () => {
       </Head>
       <h1>SDK Demo Game ❄️</h1>
       <div>
-        <FractalProvider>
+        <FractalProvider clientId={CLIENT_ID}>
           <FractalWallet />
         </FractalProvider>
       </div>
