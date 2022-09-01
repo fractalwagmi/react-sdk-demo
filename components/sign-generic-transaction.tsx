@@ -12,9 +12,9 @@ export const SignGenericTransaction = () => {
     }
 
     try {
-      signTransaction(unsignedTransactionB58);
+      await signTransaction(unsignedTransactionB58);
       // eslint-disable-next-line no-console
-      console.log('Transaction signed');
+      console.log('Transaction signed.');
     } catch (err: unknown) {
       // eslint-disable-next-line no-console
       console.error('err signing transaction. err = ', err);
