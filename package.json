@@ -10,7 +10,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@fractalwagmi/fractal-sdk": "^0.2.7",
+    "@fractalwagmi/fractal-sdk": "^0.2.9-0",
     "next": "^12.2.5",
     "react": "^18",
     "react-dom": "^18"
