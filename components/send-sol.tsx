@@ -14,7 +14,7 @@ export const SendSOL = () => {
   const connection = new Connection('https://api.mainnet-beta.solana.com');
 
   const handleButtonClick = async () => {
-    if (userWallet == null) {
+    if (!userWallet) {
       console.log('Wallet not loaded yet.');
       return;
     }
