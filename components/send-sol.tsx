@@ -14,6 +14,11 @@ export const SendSOL = () => {
   const connection = new Connection('https://api.mainnet-beta.solana.com');
 
   const handleButtonClick = async () => {
+    if (userWallet == null) {
+      console.log('Wallet not loaded yet.');
+      return;
+    }
+
     const blockhash = (await connection.getLatestBlockhash('finalized'))
       .blockhash;
 
