@@ -31,7 +31,6 @@
     "no-multiple-empty-lines": "error",
     "no-console": "warn",
     // Unicorn rules
-    "unicorn/import-index": "error",
     "unicorn/filename-case": "error",
     // Sort keys
     "sort-keys-fix/sort-keys-fix": "error",
@@ -46,7 +45,9 @@
           "order": "asc",
           "caseInsensitive": true
         },
-        "pathGroupsExcludedImportTypes": ["builtin"],
+        "pathGroupsExcludedImportTypes": [
+          "builtin"
+        ],
         "newlines-between": "always"
       }
     ],
