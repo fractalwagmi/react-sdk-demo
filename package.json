@@ -10,7 +10,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@fractalwagmi/fractal-sdk": "^0.2.10-5",
+    "@fractalwagmi/fractal-sdk": "^0.2.10-6",
     "@solana/web3.js": "^1.56.2",
     "bs58": "^5.0.0",
     "next": "^12.2.5",
