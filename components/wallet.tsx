@@ -1,5 +1,6 @@
 import {
   Coin,
+  FractalSDKError,
   Item,
   Scope,
   SignInWithFractal,
@@ -22,6 +23,11 @@ export function Wallet() {
     <div>
       <SignInWithFractal
         scopes={[Scope.IDENTIFY, Scope.COINS_READ, Scope.ITEMS_READ]}
+        onSuccess={() => console.log('SignInWtihFractal onSuccess')}
+        onError={(err: FractalSDKError) => {
+          console.log('SignInWtihFractal onError err = ', err);
+        }}
+        onSignOut={() => console.log('SignInWtihFractal onSignOut')}
       ></SignInWithFractal>
       <div style={{ marginTop: '1rem' }}>
         {user && <div>User id: {user.userId}</div>}

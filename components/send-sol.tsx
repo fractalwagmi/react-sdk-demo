@@ -6,10 +6,18 @@ import {
   Transaction,
 } from '@solana/web3.js';
 import base58 from 'bs58';
+import { useState } from 'react';
 
 export const SendSOL = () => {
   const { data: userWallet } = useUserWallet();
-  const { signTransaction } = useSignTransaction();
+  const [unsignedTransactionB58, setUnsignedTransactionB58] = useState('');
+  const { data: signature, error } = useSignTransaction({
+    unsignedTransactionB58,
+  });
+
+  console.log('SendSOL');
+  console.log('sign-transaction signature = ', signature);
+  console.log('sign-transaction error = ', error);
 
   const connection = new Connection('https://api.mainnet-beta.solana.com');
 
@@ -38,20 +46,11 @@ export const SendSOL = () => {
     transaction.recentBlockhash = blockhash;
     transaction.feePayer = fromPublickey;
 
-    const unsignedTransactionB58 = base58.encode(
-      transaction.serializeMessage(),
-    );
+    const transactionb58 = base58.encode(transaction.serializeMessage());
 
-    console.log(unsignedTransactionB58);
+    console.log('transactionb58 = ', transactionb58);
 
-    try {
-      await signTransaction(unsignedTransactionB58);
-      // eslint-disable-next-line no-console
-      console.log('Transaction signed');
-    } catch (err: unknown) {
-      // eslint-disable-next-line no-console
-      console.error('err signing transaction. err = ', err);
-    }
+    setUnsignedTransactionB58(transactionb58);
   };
 
   if (!userWallet) {
