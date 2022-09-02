@@ -1,24 +1,21 @@
 import { useSignTransaction, useUser } from '@fractalwagmi/fractal-sdk';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 export const SignGenericTransaction = () => {
   const { data: user } = useUser();
-  const { signTransaction } = useSignTransaction();
   const [unsignedTransactionB58, setUnsignedTransactionB58] = useState('');
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const { data: signature, error } = useSignTransaction({
+    unsignedTransactionB58,
+  });
+
+  console.log('SignGenericTransaction');
+  console.log('signature = ', signature);
+  console.log('error = ', error);
 
   const handleButtonClick = async () => {
-    if (!unsignedTransactionB58) {
-      return;
-    }
-
-    try {
-      await signTransaction(unsignedTransactionB58);
-      // eslint-disable-next-line no-console
-      console.log('Transaction signed.');
-    } catch (err: unknown) {
-      // eslint-disable-next-line no-console
-      console.error('err signing transaction. err = ', err);
-    }
+    console.log('setting');
+    setUnsignedTransactionB58(textareaRef.current?.value ?? '');
   };
 
   if (!user) {
@@ -40,7 +37,7 @@ export const SignGenericTransaction = () => {
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <textarea
           placeholder="Input unsigned transaction b58"
-          onChange={e => setUnsignedTransactionB58(e.target.value)}
+          ref={textareaRef}
           style={{
             padding: '0.5rem 1rem',
             width: '500px',
@@ -50,7 +47,6 @@ export const SignGenericTransaction = () => {
         <button
           style={{ padding: '0.5rem 1rem', width: 'max-content' }}
           onClick={handleButtonClick}
-          disabled={unsignedTransactionB58.trim() === ''}
         >
           Sign Transaction
         </button>
