@@ -11,13 +11,17 @@ import { useState } from 'react';
 export const SendSOL = () => {
   const { data: userWallet } = useUserWallet();
   const [unsignedTransactionB58, setUnsignedTransactionB58] = useState('');
-  const { data: signature, error } = useSignTransaction({
+  const {
+    approving,
+    data: signature,
+    error,
+  } = useSignTransaction({
     unsignedTransactionB58,
   });
 
   console.log('SendSOL');
-  console.log('sign-transaction signature = ', signature);
-  console.log('sign-transaction error = ', error);
+  console.log('signature = ', signature, 'error = ', error);
+  console.log('approving = ', approving);
 
   const connection = new Connection('https://api.mainnet-beta.solana.com');
 
