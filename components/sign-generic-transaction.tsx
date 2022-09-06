@@ -1,21 +1,13 @@
 import { useSignTransaction, useUser } from '@fractalwagmi/fractal-sdk';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 export const SignGenericTransaction = () => {
   const { data: user } = useUser();
-  const [unsignedTransactionB58, setUnsignedTransactionB58] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const { data: signature, error } = useSignTransaction({
-    unsignedTransactionB58,
-  });
-
-  console.log('SignGenericTransaction');
-  console.log('signature = ', signature);
-  console.log('error = ', error);
+  const { signTransaction } = useSignTransaction();
 
   const handleButtonClick = async () => {
-    console.log('setting');
-    setUnsignedTransactionB58(textareaRef.current?.value ?? '');
+    signTransaction(textareaRef.current?.value ?? '');
   };
 
   if (!user) {

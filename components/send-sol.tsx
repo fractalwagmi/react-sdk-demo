@@ -6,22 +6,10 @@ import {
   Transaction,
 } from '@solana/web3.js';
 import base58 from 'bs58';
-import { useState } from 'react';
 
 export const SendSOL = () => {
   const { data: userWallet } = useUserWallet();
-  const [unsignedTransactionB58, setUnsignedTransactionB58] = useState('');
-  const {
-    approving,
-    data: signature,
-    error,
-  } = useSignTransaction({
-    unsignedTransactionB58,
-  });
-
-  console.log('SendSOL');
-  console.log('signature = ', signature, 'error = ', error);
-  console.log('approving = ', approving);
+  const { signTransaction } = useSignTransaction();
 
   const connection = new Connection('https://api.mainnet-beta.solana.com');
 
@@ -54,7 +42,12 @@ export const SendSOL = () => {
 
     console.log('transactionb58 = ', transactionb58);
 
-    setUnsignedTransactionB58(transactionb58);
+    try {
+      const { signature } = await signTransaction(transactionb58);
+      console.log('signed. signature abbrev = ', signature.slice(0, 10));
+    } catch (err: unknown) {
+      console.log('error signing transaction. err = ', err);
+    }
   };
 
   if (!userWallet) {
