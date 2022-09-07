@@ -1,4 +1,4 @@
-import { useSignTransaction, useUserWallet } from '@fractalwagmi/fractal-sdk';
+import { useSignTransaction, useUserWallet } from '@fractalwagmi/react-sdk';
 import {
   Connection,
   PublicKey,

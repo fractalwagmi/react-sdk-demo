@@ -8,7 +8,7 @@ import {
   useItems,
   useUser,
   useUserWallet,
-} from '@fractalwagmi/fractal-sdk';
+} from '@fractalwagmi/react-sdk';
 
 import { SignGenericTransaction } from 'components/sign-generic-transaction';
 

@@ -1,4 +1,4 @@
-import { useSignTransaction, useUser } from '@fractalwagmi/fractal-sdk';
+import { useSignTransaction, useUser } from '@fractalwagmi/react-sdk';
 import { useRef } from 'react';
 
 export const SignGenericTransaction = () => {
