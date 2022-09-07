@@ -10,7 +10,6 @@ import {
   useUserWallet,
 } from '@fractalwagmi/fractal-sdk';
 
-import { SendSOL } from 'components/send-sol';
 import { SignGenericTransaction } from 'components/sign-generic-transaction';
 
 export function Wallet() {
@@ -38,7 +37,6 @@ export function Wallet() {
         <div>Username: {user?.username}</div>
       </div>
       <SignGenericTransaction />
-      <SendSOL />
       <h1>Coins</h1>
       <div style={{ marginTop: '1rem' }}>
         {coins.map((c: Coin) => (
