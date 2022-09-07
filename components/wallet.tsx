@@ -8,7 +8,7 @@ import {
   useItems,
   useUser,
   useUserWallet,
-} from '@fractalwagmi/fractal-sdk';
+} from '@fractalwagmi/react-sdk';
 
 import { SignGenericTransaction } from 'components/sign-generic-transaction';
 
@@ -48,7 +48,7 @@ export function Wallet() {
       <h1>Items</h1>
       <div style={{ marginTop: '1rem' }}>
         {items.map((i: Item) => (
-          <div key={i.id}>
+          <div key={i.id} style={{ float: 'left', marginRight: '2rem' }}>
             <img alt="" width="300" src={i.files[0].uri} />
             <div>{i.name}</div>
             <div>{i.id}</div>
