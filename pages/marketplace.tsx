@@ -1,4 +1,4 @@
-import { FractalProvider } from '@fractalwagmi/fractal-sdk';
+import { FractalProvider } from '@fractalwagmi/react-sdk';
 import Head from 'next/head';
 
 import { Marketplace } from 'components/marketplace';
