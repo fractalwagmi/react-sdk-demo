@@ -37,24 +37,32 @@ export function Wallet() {
         <div>Username: {user?.username}</div>
       </div>
       <SignGenericTransaction />
-      <h1>Coins</h1>
-      <div style={{ marginTop: '1rem' }}>
-        {coins.map((c: Coin) => (
-          <div key={c.symbol}>
-            {c.uiAmount} {c.symbol}
+      {coins ? (
+        <>
+          <h1>Coins</h1>
+          <div style={{ marginTop: '1rem' }}>
+            {coins.map((c: Coin) => (
+              <div key={c.symbol}>
+                {c.uiAmount} {c.symbol}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <h1>Items</h1>
-      <div style={{ marginTop: '1rem' }}>
-        {items.map((i: Item) => (
-          <div key={i.id} style={{ float: 'left', marginRight: '2rem' }}>
-            <img alt="" width="300" src={i.files[0].uri} />
-            <div>{i.name}</div>
-            <div>{i.id}</div>
+        </>
+      ) : null}
+      {items ? (
+        <>
+          <h1>Items</h1>
+          <div style={{ marginTop: '1rem' }}>
+            {items.map((i: Item) => (
+              <div key={i.id} style={{ float: 'left', marginRight: '2rem' }}>
+                <img alt="" width="300" src={i.files[0].uri} />
+                <div>{i.name}</div>
+                <div>{i.id}</div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </>
+      ) : null}
     </div>
   );
 }
