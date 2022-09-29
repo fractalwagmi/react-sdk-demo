@@ -1,3 +1,5 @@
+import '@fractalwagmi/react-sdk/styles.css';
+
 import { FractalProvider } from '@fractalwagmi/react-sdk';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
