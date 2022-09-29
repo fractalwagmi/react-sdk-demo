@@ -1,3 +1,5 @@
+import '@fractalwagmi/react-sdk/styles.css';
+
 import { FractalProvider } from '@fractalwagmi/react-sdk';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
