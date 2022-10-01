@@ -42,7 +42,7 @@ export const WalletItem = ({ item }: { item: Item }) => {
 
   const handleListConfirmationClick = async (tokenAddress: string) => {
     if (!priceInput) {
-      throw new Error(`expected price to be defined but got ${price}`);
+      throw new Error(`expected price to be defined but got ${priceInput}`);
     }
     try {
       const { signature } = await listItem({ price: priceInput, tokenAddress });
