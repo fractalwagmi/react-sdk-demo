@@ -26,12 +26,9 @@ const MarketplacePage = () => {
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <h1>SDK Demo Marketplace ❄️</h1>
-      <div>
-        <FractalProvider clientId={CLIENT_ID}>
-          <Marketplace />
-        </FractalProvider>
-      </div>
+      <FractalProvider clientId={CLIENT_ID}>
+        <Marketplace />
+      </FractalProvider>
     </div>
   );
 };
