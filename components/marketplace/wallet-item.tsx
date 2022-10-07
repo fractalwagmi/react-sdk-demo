@@ -1,4 +1,10 @@
-import { Item, useCancelListItem, useListItem } from '@fractalwagmi/react-sdk';
+import {
+  Item,
+  TransactionStatus,
+  useCancelListItem,
+  useListItem,
+  useWaitForTransactionStatus,
+} from '@fractalwagmi/react-sdk';
 import CloseIcon from '@mui/icons-material/Close';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {
@@ -22,6 +28,25 @@ export const WalletItem = ({ item }: { item: Item }) => {
   const [priceInput, setPriceInput] = useState('');
   const { listItem } = useListItem();
   const { cancelListItem } = useCancelListItem();
+  const [txStatus, setTxStatus] = useState<null | TransactionStatus>(null);
+  const { waitForTransactionStatus } = useWaitForTransactionStatus();
+
+  const checkStatus = async (signature: string) => {
+    try {
+      setTxStatus(TransactionStatus.PENDING);
+      const status = await waitForTransactionStatus(signature);
+      setTxStatus(status);
+    } catch (err: unknown) {
+      console.log('An error occurred while checking tx status', err);
+    }
+    resetStatusAfterTimeout();
+  };
+
+  const resetStatusAfterTimeout = () => {
+    setTimeout(() => {
+      setTxStatus(null);
+    }, 3000);
+  };
 
   const handleListOrUnlistClick = async () => {
     if (item.isForSale) {
@@ -31,6 +56,7 @@ export const WalletItem = ({ item }: { item: Item }) => {
           tokenAddress: item.id,
         });
         console.log('cancelled. signature = ', signature);
+        checkStatus(signature);
       } catch (err: unknown) {
         console.log('an error occurred. err = ', err);
       }
@@ -47,6 +73,7 @@ export const WalletItem = ({ item }: { item: Item }) => {
     try {
       const { signature } = await listItem({ price: priceInput, tokenAddress });
       console.log('listed. signature = ', signature);
+      checkStatus(signature);
     } catch (err: unknown) {
       console.log('an error occurred. err = ', err);
     }
@@ -111,6 +138,11 @@ export const WalletItem = ({ item }: { item: Item }) => {
           >
             List item
           </LoadingButton>
+          {txStatus !== null && (
+            <Typography variant="body1">
+              Transaction Status: {txStatus}
+            </Typography>
+          )}
         </Stack>
       </Dialog>
     </Stack>
