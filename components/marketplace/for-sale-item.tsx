@@ -1,9 +1,11 @@
 import {
   ForSaleItem as ForSaleItemData,
   useBuyItem,
+  useWaitForTransactionStatus,
+  TransactionStatus,
 } from '@fractalwagmi/react-sdk';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, Stack } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import { useState } from 'react';
 
 import { LabelValue } from 'components/marketplace/label-value';
@@ -11,6 +13,8 @@ import { LabelValue } from 'components/marketplace/label-value';
 export const ForSaleItem = ({ item }: { item: ForSaleItemData }) => {
   const { buyItem } = useBuyItem();
   const [buying, setBuying] = useState(false);
+  const [txStatus, setTxStatus] = useState<null | TransactionStatus>(null);
+  const { waitForTransactionStatus } = useWaitForTransactionStatus();
 
   return (
     <Stack p={2} border="1px solid" borderColor="divider" spacing={1}>
@@ -33,19 +37,34 @@ export const ForSaleItem = ({ item }: { item: ForSaleItemData }) => {
           loading={buying}
           variant="outlined"
           onClick={async () => {
+            let signature = '';
             setBuying(true);
             try {
-              const { signature } = await buyItem({ tokenAddress: item.id });
+              signature = (await buyItem({ tokenAddress: item.id })).signature;
               console.log('bought. signature = ', signature);
             } catch (err: unknown) {
               console.log('an error occurred. err = ', err);
             }
             setBuying(false);
+
+            try {
+              setTxStatus(TransactionStatus.PENDING);
+              const status = await waitForTransactionStatus(signature);
+              setTxStatus(status);
+            } catch (err: unknown) {
+              console.log(
+                'an error occurred while waiting for tx to post',
+                err,
+              );
+            }
           }}
         >
           Buy
         </LoadingButton>
       </Box>
+      {txStatus !== null && (
+        <Typography variant="body1">Transaction Status: {txStatus}</Typography>
+      )}
     </Stack>
   );
 };
