@@ -10,6 +10,7 @@ import {
   useUserWallet,
 } from '@fractalwagmi/react-sdk';
 
+// import { SendSOL } from 'components/send-sol';
 import { SignGenericTransaction } from 'components/sign-generic-transaction';
 
 export function Wallet() {
@@ -37,6 +38,7 @@ export function Wallet() {
         <div>Username: {user?.username}</div>
       </div>
       <SignGenericTransaction />
+      {/* <SendSOL /> */}
       {coins ? (
         <>
           <h1>Coins</h1>
@@ -51,14 +53,57 @@ export function Wallet() {
       ) : null}
       {items ? (
         <>
-          <h1>Items</h1>
+          <h1>Ethereum Items</h1>
           <div style={{ marginTop: '1rem' }}>
             {items.map((i: Item) => (
-              <div key={i.id} style={{ float: 'left', marginRight: '2rem' }}>
-                <img alt="" width="300" src={i.files[0].uri} />
-                <div>{i.name}</div>
-                <div>{i.id}</div>
-              </div>
+              <>
+                {i.chain == 'ETH' ? (
+                  <div
+                    key={i.id}
+                    style={{ float: 'left', marginRight: '2rem' }}
+                  >
+                    <img alt="" height="300" src={i.files[0].uri} />
+                    <div>{i.name}</div>
+                    <div>{i.id}</div>
+                  </div>
+                ) : null}
+              </>
+            ))}
+          </div>
+          <br style={{ clear: 'both' }} />
+          <h1>Solana Items</h1>
+          <div style={{ marginTop: '1rem' }}>
+            {items.map((i: Item) => (
+              <>
+                {i.chain == 'SOLANA' ? (
+                  <div
+                    key={i.id}
+                    style={{ float: 'left', marginRight: '2rem' }}
+                  >
+                    <img alt="" height="300" src={i.files[0].uri} />
+                    <div>{i.name}</div>
+                    <div>{i.id}</div>
+                  </div>
+                ) : null}
+              </>
+            ))}
+          </div>
+          <br style={{ clear: 'both' }} />
+          <h1>Polygon Items</h1>
+          <div style={{ marginTop: '1rem' }}>
+            {items.map((i: Item) => (
+              <>
+                {i.chain == 'POLYGON' ? (
+                  <div
+                    key={i.id}
+                    style={{ float: 'left', marginRight: '2rem' }}
+                  >
+                    <img alt="" height="300" src={i.files[0].uri} />
+                    <div>{i.name}</div>
+                    <div>{i.id}</div>
+                  </div>
+                ) : null}
+              </>
             ))}
           </div>
         </>
