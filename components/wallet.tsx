@@ -1,7 +1,6 @@
 import {
   Coin,
   FractalSDKError,
-  Item,
   Scope,
   SignInWithFractal,
   useCoins,
@@ -54,7 +53,7 @@ export function Wallet() {
       {items ? (
         <>
           <h1>Ethereum Items</h1>
-          <div style={{ marginTop: '1rem' }}>
+          {/* <div style={{ marginTop: '1rem' }}>
             {items.map((i: Item) => (
               <>
                 {i.chain == 'ETH' ? (
@@ -69,10 +68,10 @@ export function Wallet() {
                 ) : null}
               </>
             ))}
-          </div>
+          </div> */}
           <br style={{ clear: 'both' }} />
           <h1>Solana Items</h1>
-          <div style={{ marginTop: '1rem' }}>
+          {/* <div style={{ marginTop: '1rem' }}>
             {items.map((i: Item) => (
               <>
                 {i.chain == 'SOLANA' ? (
@@ -87,10 +86,10 @@ export function Wallet() {
                 ) : null}
               </>
             ))}
-          </div>
+          </div> */}
           <br style={{ clear: 'both' }} />
           <h1>Polygon Items</h1>
-          <div style={{ marginTop: '1rem' }}>
+          {/* <div style={{ marginTop: '1rem' }}>
             {items.map((i: Item) => (
               <>
                 {i.chain == 'POLYGON' ? (
@@ -105,7 +104,7 @@ export function Wallet() {
                 ) : null}
               </>
             ))}
-          </div>
+          </div> */}
         </>
       ) : null}
     </div>
