@@ -1,13 +1,16 @@
 import {
+  BuyCrypto,
   Coin,
   FractalSDKError,
   Scope,
   SignInWithFractal,
   useCoins,
   useItems,
+  useOnramp,
   useUser,
   useUserWallet,
 } from '@fractalwagmi/react-sdk';
+import { useCallback } from 'react';
 
 // import { SendSOL } from 'components/send-sol';
 import { SignGenericTransaction } from 'components/sign-generic-transaction';
@@ -18,16 +21,38 @@ export function Wallet() {
   const { data: coins } = useCoins();
   const { data: items } = useItems();
 
+  const onFulfillmentComplete = useCallback(() => {
+    window.alert('Fulfillment was completed!');
+  }, []);
+
+  const onRejected = useCallback(() => {
+    window.alert('The onramp session was rejected :(');
+  }, []);
+
+  const { openOnrampWindow } = useOnramp({
+    onFulfillmentComplete,
+    onRejected,
+    theme: 'dark',
+  });
+
   return (
     <div>
-      <SignInWithFractal
-        scopes={[Scope.IDENTIFY, Scope.COINS_READ, Scope.ITEMS_READ]}
-        onSuccess={() => console.log('SignInWtihFractal onSuccess')}
-        onError={(err: FractalSDKError) => {
-          console.log('SignInWtihFractal onError err = ', err);
-        }}
-        onSignOut={() => console.log('SignInWtihFractal onSignOut')}
-      ></SignInWithFractal>
+      <div style={{ display: 'flex', gap: '16px' }}>
+        <SignInWithFractal
+          scopes={[Scope.IDENTIFY, Scope.COINS_READ, Scope.ITEMS_READ]}
+          onSuccess={() => console.log('SignInWtihFractal onSuccess')}
+          onError={(err: FractalSDKError) => {
+            console.log('SignInWtihFractal onError err = ', err);
+          }}
+          onSignOut={() => console.log('SignInWtihFractal onSignOut')}
+        ></SignInWithFractal>
+        <BuyCrypto
+          theme="dark"
+          onFulfillmentComplete={onFulfillmentComplete}
+          onRejected={onRejected}
+        />
+        <button onClick={openOnrampWindow}>Buy Onramp (custom button)</button>
+      </div>
       <div style={{ marginTop: '1rem' }}>
         {user && <div>User id: {user.userId}</div>}
       </div>
