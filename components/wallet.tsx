@@ -51,7 +51,7 @@ export function Wallet() {
           onFulfillmentComplete={onFulfillmentComplete}
           onRejected={onRejected}
         />
-        <button onClick={openOnrampWindow}>Buy Onramp (custom button)</button>
+        <button onClick={openOnrampWindow}>Buy Crypto (custom button)</button>
       </div>
       <div style={{ marginTop: '1rem' }}>
         {user && <div>User id: {user.userId}</div>}
