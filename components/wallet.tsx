@@ -1,6 +1,5 @@
 import {
   BuyCrypto,
-  Coin,
   FractalSDKError,
   Scope,
   SignInWithFractal,
@@ -9,6 +8,9 @@ import {
   useOnramp,
   useUser,
   useUserWallet,
+  Item,
+  Coin,
+  FractalSdkCommonChain,
 } from '@fractalwagmi/react-sdk';
 import { useCallback } from 'react';
 
@@ -78,10 +80,10 @@ export function Wallet() {
       {items ? (
         <>
           <h1>Ethereum Items</h1>
-          {/* <div style={{ marginTop: '1rem' }}>
+          <div style={{ marginTop: '1rem' }}>
             {items.map((i: Item) => (
               <>
-                {i.chain == 'ETH' ? (
+                {i.chain === FractalSdkCommonChain.ETH ? (
                   <div
                     key={i.id}
                     style={{ float: 'left', marginRight: '2rem' }}
@@ -93,13 +95,13 @@ export function Wallet() {
                 ) : null}
               </>
             ))}
-          </div> */}
+          </div>
           <br style={{ clear: 'both' }} />
           <h1>Solana Items</h1>
-          {/* <div style={{ marginTop: '1rem' }}>
+          <div style={{ marginTop: '1rem' }}>
             {items.map((i: Item) => (
               <>
-                {i.chain == 'SOLANA' ? (
+                {i.chain === FractalSdkCommonChain.SOLANA ? (
                   <div
                     key={i.id}
                     style={{ float: 'left', marginRight: '2rem' }}
@@ -111,13 +113,13 @@ export function Wallet() {
                 ) : null}
               </>
             ))}
-          </div> */}
+          </div>
           <br style={{ clear: 'both' }} />
           <h1>Polygon Items</h1>
-          {/* <div style={{ marginTop: '1rem' }}>
+          <div style={{ marginTop: '1rem' }}>
             {items.map((i: Item) => (
               <>
-                {i.chain == 'POLYGON' ? (
+                {i.chain === FractalSdkCommonChain.POLYGON ? (
                   <div
                     key={i.id}
                     style={{ float: 'left', marginRight: '2rem' }}
@@ -129,7 +131,7 @@ export function Wallet() {
                 ) : null}
               </>
             ))}
-          </div> */}
+          </div>
         </>
       ) : null}
     </div>
