@@ -2,6 +2,7 @@ import {
   Scope,
   SignInWithFractal,
   useUserWallet,
+  useUser,
 } from '@fractalwagmi/react-sdk';
 import { Box, Stack, Typography } from '@mui/material';
 import { useState } from 'react';
@@ -12,68 +13,29 @@ export function Mint() {
   const [symbol, setSymbol] = useState('');
   const [recipient, setRecipient] = useState('');
   const [imageBytes, setImageBytes] = useState('');
+  const [attributes_date, setAttributesDate] = useState('');
+  const [attributes_game, setAttributesGame] = useState('');
+  const [attributes_position, setAttributesPosition] = useState('');
+  const [attributes_season, setAttributesSeason] = useState('');
   const { data: userWallet } = useUserWallet();
+  const { data: user } = useUser();
 
-  const generateMintTx = (authToken: any) => {
-    if (name === '') {
-      alert('must fill out name');
-      return;
-    }
-    if (description === '') {
-      alert('must fill out description');
-      return;
-    }
-    if (symbol === '') {
-      alert('must fill out symbol');
-      return;
-    }
-    if (recipient === '') {
-      alert('must fill out recipient');
-      return;
-    }
-    if (imageBytes === '') {
-      alert('must fill out imageBytes');
-      return;
-    }
-
+  const generateMintTxButton = async () => {
     const options = {
       body: JSON.stringify({
-        metadata: {
-          creators: [
-            {
-              address: recipient,
-              share: 90,
-            },
-          ],
-          description: description,
-          imageBytes: imageBytes,
-          name: name,
-          sellerFeeBasisPoints: 500,
-          symbol: symbol,
+        attributes: {
+          date: attributes_date,
+          game: attributes_game,
+          position: attributes_position,
+          season: attributes_season,
         },
+        description: description,
+        email: user?.email,
+        imageBytes: imageBytes,
+        name: name,
         payer: userWallet?.solanaPublicKeys[0],
         recipient: recipient,
-      }),
-      headers: {
-        Authorization: 'Bearer ' + authToken,
-        accept: 'application/json',
-        'content-type': 'application/json',
-      },
-      method: 'POST',
-    };
-
-    fetch('https://api.fractal.is/sdk/v1/mint', options)
-      .then(async response => response.json())
-      .then(response => window.open(response.url))
-      .catch(err => console.error(err));
-  };
-
-  const generateMintTxButton = () => {
-    const options = {
-      body: JSON.stringify({
-        client_id: 'uah_xv2gE7emcl7yWtZId77SfF-aitSg',
-        client_secret:
-          'KByMO9P8kHTpQXZHZUblNgK6cKwvaZ_YEURbRQbI-ZDp3PPf5rxKY30jDgpPc8eF',
+        symbol: symbol,
       }),
       headers: {
         accept: 'application/json',
@@ -82,10 +44,19 @@ export function Mint() {
       method: 'POST',
     };
 
-    fetch('https://auth-api.fractal.is/auth/oauth/token', options)
-      .then(async response => response.json())
-      .then(response => generateMintTx(response.access_token))
-      .catch(err => console.error(err));
+    try {
+      const resp = await fetch('/api/mint', options);
+      const data = await resp.json();
+
+      if (data.url == '') {
+        throw new Error('something went wrong');
+        return;
+      }
+
+      window.open(data.url);
+    } catch (e: unknown) {
+      alert(e);
+    }
   };
 
   return (
@@ -152,7 +123,43 @@ export function Mint() {
           ></textarea>
           <br />
           <br />
-          <button onClick={() => generateMintTxButton()}>Mint</button>
+          Attributes:
+          <br />
+          <br />
+          Game:
+          <input
+            value={attributes_game}
+            onChange={event => {
+              setAttributesGame(event.target.value);
+            }}
+          ></input>
+          <br />
+          Date:
+          <input
+            value={attributes_date}
+            onChange={event => {
+              setAttributesDate(event.target.value);
+            }}
+          ></input>
+          <br />
+          Season:
+          <input
+            value={attributes_season}
+            onChange={event => {
+              setAttributesSeason(event.target.value);
+            }}
+          ></input>
+          <br />
+          Position:
+          <input
+            value={attributes_position}
+            onChange={event => {
+              setAttributesPosition(event.target.value);
+            }}
+          ></input>
+          <br />
+          <br />
+          <button onClick={async () => generateMintTxButton()}>Mint</button>
         </Box>
       </Stack>
     </Stack>
