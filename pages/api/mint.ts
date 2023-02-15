@@ -36,6 +36,7 @@ const generateMintTx = async (authToken: any, request: any): Promise<any> => {
           Position: request.attributes.position,
           Season: request.attributes.season,
         },
+        collectionId: '6h5TrW8oTts97AGxw7PUzPrPYHpygu1ADivNVhk1kNLC',
         creators: [
           {
             address: '2ibfysdYESH3VYyt8WhwXwjJshStpkiTVA5aBZQFS9CZ',
