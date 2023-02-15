@@ -29,6 +29,7 @@ const generateMintTx = async (authToken: any, request: any): Promise<any> => {
 
   const options = {
     body: JSON.stringify({
+      collectionId: '6h5TrW8oTts97AGxw7PUzPrPYHpygu1ADivNVhk1kNLC',
       metadata: {
         attributes: {
           Date: request.attributes.date,
