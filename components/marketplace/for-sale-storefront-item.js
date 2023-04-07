@@ -48,7 +48,6 @@ export const ForSaleStorefrontItem = ({ item }) => {
         src={item.metadata.imageUrl}
       />
       <LabelValue label="Name">{item.metadata.name}</LabelValue>
-      <LabelValue label="Token address">{item.id}</LabelValue>
       <LabelValue label="Price">
         {item.price?.amount} {item.price?.unit}
       </LabelValue>
