@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-const storefrontMint = async (authToken: any, request: any): Promise<any> => {
+const generateBurnTx = async (authToken: any, request: any): Promise<any> => {
   const options = {
     headers: {
       Authorization: 'Bearer ' + authToken,
@@ -45,7 +45,7 @@ export default async function handler(
   );
 
   const data = await resp.json();
-  const transactionBase58 = await storefrontMint(
+  const transactionBase58 = await generateBurnTx(
     data.access_token,
     request.body,
   );
