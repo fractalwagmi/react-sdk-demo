@@ -16,6 +16,7 @@ import { useCallback } from 'react';
 
 // import { SendSOL } from 'components/send-sol';
 import { SignGenericTransaction } from 'components/sign-generic-transaction';
+import { SignMessage } from 'components/sign-message';
 
 export function Wallet() {
   const { data: user } = useUser();
@@ -64,6 +65,7 @@ export function Wallet() {
         <div>Username: {user?.username}</div>
       </div>
       <SignGenericTransaction />
+      <SignMessage />
       {/* <SendSOL /> */}
       {coins ? (
         <>
