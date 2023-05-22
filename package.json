@@ -12,7 +12,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
-    "@fractalwagmi/react-sdk": "^1.2.2",
+    "@fractalwagmi/react-sdk": "^1.3.1-alpha04",
     "@mui/icons-material": "^5.10.6",
     "@mui/lab": "^5.0.0-alpha.101",
     "@mui/material": "^5.10.7",
@@ -20,7 +20,8 @@
     "bs58": "^5.0.0",
     "next": "^12.2.5",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
     "@types/node": "^12.12.21",
