@@ -11,7 +11,7 @@ const getStorefrontItems = async (authToken: any): Promise<any> => {
   };
 
   const resp = await fetch(
-    'https://api.fractal.is/sdk/v1/inventory/solana/items',
+    'https://api.fractal.is/sdk/inventory/items',
     options,
   );
   const data = await resp.json();

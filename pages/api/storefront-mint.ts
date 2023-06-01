@@ -14,7 +14,7 @@ const storefrontMint = async (authToken: any, request: any): Promise<any> => {
   };
 
   const resp = await fetch(
-    'https://api.fractal.is/sdk/v1/inventory/solana/item/' +
+    'https://api.fractal.is/sdk/inventory/item/' +
       request.itemId +
       '/create_mint_transaction',
     options,
