@@ -18,7 +18,7 @@
     "@mui/material": "^5.10.7",
     "@solana/web3.js": "^1.56.2",
     "bs58": "^5.0.0",
-    "next": "^12.2.5",
+    "next": "^13.5.4",
     "react": "^18",
     "react-dom": "^18",
     "tweetnacl": "^1.0.3"
